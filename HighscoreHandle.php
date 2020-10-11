@@ -6,6 +6,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if ((!empty($name))&&(!empty($score))) {
     add_table_entry($name,$score);
     write_table();
+  }else{
+    echo 'no data to write';
   }
 }
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
@@ -16,14 +18,8 @@ function add_table_entry($new_name, $new_score){
   // create new object:
   $new_obj->name = $new_name;
   $new_obj->score = $new_score;
-
-  $objArray = get_scores_content();
   // convert to JSON object:
-  if(count($objArray)>0){
-    $new_entry = ',' . json_encode($new_obj) . ']';
-  }else{
-      $new_entry = '[' . json_encode($new_obj) . ']';
-  }
+  $new_entry = ',' . json_encode($new_obj) . ']';
   // write:
   if($fp = fopen("./scores.json", "c")){
     // go to EOF-1:
@@ -42,17 +38,14 @@ function cmp($a, $b)
     if ($a->score == $b->score) {
         return 0;
     }
-    return ($a->score < $b->score) ? 1 : -1;
-}
-
-function get_scores_content(){
-  $fileContent = file_get_contents("scores.json");
-  return json_decode($fileContent, false);
+    return ($a->score < $b->score) ? -1 : 1;
 }
 
 function write_table(){
     write_table_head();
-      $objArray = get_scores_content();
+    $fileContent = file_get_contents("scores.json");
+      $objArray = json_decode($fileContent, false);
+      // if(count($objArray)>1){
         usort($objArray, "cmp");
         foreach ($objArray as $object){
           write_table_entry($object->name, $object->score);

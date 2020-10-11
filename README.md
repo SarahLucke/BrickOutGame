@@ -11,9 +11,9 @@ Based on [this tutorial](https://developer.mozilla.org/en-US/docs/Games/Tutorial
 
 The game is completely done in JavaScript using an HTML canvas element. PHP is only used for writing and reading highscores.
 
-![preview](screenshots/brick_out.png)
+![brick out standard mode](screenshots/brick_out_standard.png)![brick out mixed mode](screenshots/brick_out_mixed.png)
 ### Layout
-- info panel on the left for showing controls, notes etc.
+- info panel on the left for showing a menu, controls, notes etc.
 - main game area containing the canvas to play in. The time played (seconds) is shown in the top left corner.
 - highscores table
 
