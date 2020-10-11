@@ -2,6 +2,7 @@
 var canvas = document.getElementById("DrawingArea");
 // 2D-rendering context:
 var ctx = canvas.getContext("2d");
+var phpEnabled = false;
 
 //defining states:
 const INIT = 0;
@@ -318,34 +319,43 @@ function CheckBrickCollision() {
 function sendName(){
   var name = document.getElementById("name").value;
 
-  var xhttp = new XMLHttpRequest();
-  xhttp.open("POST", "HighscoreHandle.php", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  var data = 'name=' + name + '&score=' + score;
-
-  xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-          document.getElementById("highscores").innerHTML = this.responseText;
-          state = INIT;
-      }
-  };
-
-  xhttp.send(data);
-  document.getElementById("popup").style.display = "none";
-}
-
-function getTable(){
-  if(document.getElementById("normal").checked==true){
+  if(phpEnabled==true){
     var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "HighscoreHandle.php", true);
+    xhttp.open("POST", "HighscoreHandle.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    var data = 'name=' + name + '&score=' + score;
 
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             document.getElementById("highscores").innerHTML = this.responseText;
+            state = INIT;
         }
     };
 
-    xhttp.send();
+    xhttp.send(data);
+  } else {
+    document.getElementById("highscores").innerHTML = "<p>php disabled</p>";
+  }
+  document.getElementById("popup").style.display = "none";
+}
+
+function getTable(){
+
+  if(phpEnabled==true){
+    if(document.getElementById("normal").checked==true){
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("GET", "HighscoreHandle.php", true);
+
+      xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              document.getElementById("highscores").innerHTML = this.responseText;
+          }
+      };
+
+      xhttp.send();
+    }
+  } else{
+    document.getElementById("highscores").innerHTML = "<p>php disabled</p>";
   }
 }
 
