@@ -3,7 +3,7 @@ Classic brickout game.
 
 You control a pad (on the bottom of the screen) and try to rebounce a moving ball. The ball degrades blocks on collision. Red becomes yellow, yellow becomes green and green blocks disappear on collision. Remove all blocks to win the game.
 
-Play it on [my GitHub Pages](https://sarahlucke.github.io/BrickOutGame/)
+Play it on [my GitHub Pages](https://sarahlucke.github.io/playground/BrickOutGame/)
 
 ---
 ## Implementation
